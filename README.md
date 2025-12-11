@@ -45,6 +45,7 @@ js-life-cycle/
 │   ├── components/         # Reusable React components
 │   │   ├── Card.tsx        # Colored card component with hover effects
 │   │   ├── CodeBlock.tsx   # Code display component
+│   │   ├── Footer.tsx      # Footer with links and tech stack
 │   │   ├── Layout.tsx      # Main layout wrapper with sidebar
 │   │   ├── Navigation.tsx  # Top navigation (mobile/tablet only)
 │   │   ├── Sidebar.tsx     # Sidebar navigation (desktop only)
@@ -210,24 +211,29 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 
 ### Layout System
 
-**`src/components/Layout.tsx`**: Implements responsive layout with sidebar for desktop and top navigation for mobile/tablet
+**`src/components/Layout.tsx`**: Implements responsive layout with sidebar for desktop, top navigation for mobile/tablet, and footer
 ```tsx
 export default function Layout({ children }: LayoutProps) {
   return (
-    <div className="min-h-screen flex">
-      {/* Sidebar for Desktop */}
-      <Sidebar />
-      
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0">
-        {/* Top Navigation for Mobile/Tablet */}
-        <Navigation />
+    <div className="min-h-screen flex flex-col">
+      <div className="flex flex-1">
+        {/* Sidebar for Desktop */}
+        <Sidebar />
         
-        {/* Page Content */}
-        <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-          {children}
-        </main>
+        {/* Main Content Area */}
+        <div className="flex-1 flex flex-col min-w-0">
+          {/* Top Navigation for Mobile/Tablet */}
+          <Navigation />
+          
+          {/* Page Content */}
+          <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+            {children}
+          </main>
+        </div>
       </div>
+      
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }
@@ -237,7 +243,7 @@ export default function Layout({ children }: LayoutProps) {
 
 The project follows a component-based architecture with clear separation of concerns:
 
-1. **Layout Components**: Handle page structure (Layout, Navigation, Sidebar)
+1. **Layout Components**: Handle page structure (Layout, Navigation, Sidebar, Footer)
 2. **UI Components**: Reusable UI elements (Card, CodeBlock, StepCard, VisualBox)
 3. **Page Components**: Route-specific content (all files in `pages/`)
 4. **Utility Functions**: Shared logic (routes.ts, formatters.ts)
@@ -364,6 +370,32 @@ Sidebar navigation for desktop screens (lg breakpoint and above):
 - Smooth hover transitions
 - Includes project subtitle
 - Only visible on desktop (hidden on mobile/tablet)
+
+### Footer Component
+
+Footer with author credits, social links, and tech stack:
+
+```tsx
+<Footer />
+```
+
+**Features:**
+- Responsive layout (stacks on mobile, side-by-side on desktop)
+- Author attribution with heart icon
+- Social links with icons (LinkedIn, GitHub)
+- Tech stack badges with icons and hover effects
+- Links to documentation for each technology
+- Color-coded hover states for each tech icon
+- Minimalist design matching the overall theme
+
+**Technologies Displayed:**
+- JavaScript (JS)
+- HTML
+- CSS
+- Tailwind CSS
+- React
+- Vite
+- TypeScript (TS)
 
 ## 📄 Pages
 
