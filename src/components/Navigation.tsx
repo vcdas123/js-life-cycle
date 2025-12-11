@@ -7,32 +7,15 @@ export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <nav className="bg-white/90 backdrop-blur-lg shadow-md sticky top-0 z-50 border-b border-purple-100">
-      <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-2.5 max-w-7xl">
+    <nav className="lg:hidden bg-white/90 backdrop-blur-lg shadow-md sticky top-0 z-50 border-b border-purple-100">
+      <div className="container mx-auto px-3 sm:px-4 md:px-6 py-2 sm:py-2.5">
         <div className="flex items-center justify-between gap-3 sm:gap-4">
           <Link 
             to="/" 
-            className="text-base sm:text-lg font-bold text-gradient hover:opacity-80 transition-opacity"
+            className="text-sm sm:text-base font-bold text-gradient hover:opacity-80 transition-opacity"
           >
             JS Life Cycle
           </Link>
-          
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex gap-2 xl:gap-3 items-center">
-            {routes.map((route) => (
-              <Link
-                key={route.path}
-                to={route.path}
-                className={`px-2.5 xl:px-3 py-1.5 xl:py-1.5 rounded-md text-xs xl:text-sm font-medium transition-all duration-200 whitespace-nowrap ${
-                  location.pathname === route.path
-                    ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md scale-105'
-                    : 'text-gray-700 hover:bg-purple-50 hover:text-purple-600'
-                }`}
-              >
-                {route.label}
-              </Link>
-            ))}
-          </div>
 
           {/* Mobile/Tablet Menu Button */}
           <button
