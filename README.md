@@ -6,14 +6,18 @@ A comprehensive, interactive educational website that explains the complete jour
 
 - **10 Detailed Routes** covering all aspects of JavaScript execution
 - **Fully Responsive Design** - works seamlessly on mobile, tablet, and desktop
-- **Sidebar Navigation** for desktop with sticky positioning
+- **Smooth Page Transitions** with Framer Motion animations on route changes
+- **Sidebar Navigation** for desktop with sticky positioning and animated menu items
 - **Mobile Navigation** with compact header and hamburger menu
 - **Colorful, Minimalist UI** using Tailwind CSS
-- **Elegant Hover Effects** with smooth transitions and subtle animations
+- **Elegant Animations** throughout the app with Framer Motion
+- **Enhanced Code Blocks** with copy-to-clipboard functionality and beautiful theming
+- **Scroll-to-Top** on route changes to view animations properly
 - **Reusable Components** for consistent design patterns
-- **Code Examples** with syntax highlighting
+- **Code Examples** with syntax highlighting and macOS-style headers
 - **Visual Diagrams** to illustrate complex concepts
 - **Step-by-Step Explanations** from basic to advanced concepts
+- **Staggered Animations** for cards and step components
 
 ## 📋 Table of Contents
 
@@ -33,6 +37,7 @@ A comprehensive, interactive educational website that explains the complete jour
 - **TypeScript** - Type-safe JavaScript
 - **Vite** - Fast build tool and dev server
 - **React Router DOM** - Client-side routing
+- **Framer Motion** - Animation library for smooth transitions
 - **Tailwind CSS** - Utility-first CSS framework
 - **ESLint** - Code linting
 
@@ -43,13 +48,14 @@ js-life-cycle/
 ├── public/                 # Static assets (if any)
 ├── src/
 │   ├── components/         # Reusable React components
+│   │   ├── AnimatedPage.tsx # Page wrapper with route transition animations
 │   │   ├── Card.tsx        # Colored card component with hover effects
-│   │   ├── CodeBlock.tsx   # Code display component
+│   │   ├── CodeBlock.tsx   # Enhanced code display with copy functionality
 │   │   ├── Footer.tsx      # Footer with links and tech stack
 │   │   ├── Layout.tsx      # Main layout wrapper with sidebar
 │   │   ├── Navigation.tsx  # Top navigation (mobile/tablet only)
 │   │   ├── Sidebar.tsx     # Sidebar navigation (desktop only)
-│   │   ├── StepCard.tsx    # Numbered step card component
+│   │   ├── StepCard.tsx    # Numbered step card component with animations
 │   │   └── VisualBox.tsx   # Visual diagram container
 │   ├── pages/              # Route page components
 │   │   ├── Home.tsx        # Landing page
@@ -116,25 +122,42 @@ export const routes: Route[] = [
 | `/memory-management` | `MemoryManagement` | Garbage collection and memory leaks |
 | `/complete-journey` | `CompleteJourney` | End-to-end execution flow |
 
-### Route Setup
+### Route Setup with Animations
 
 ```tsx
 // src/App.tsx
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import Layout from './components/Layout';
+import AnimatedPage from './components/AnimatedPage';
+
+function AppRoutes() {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<AnimatedPage><Home /></AnimatedPage>} />
+        <Route path="/parsing" element={<AnimatedPage><ParsingPhase /></AnimatedPage>} />
+        {/* ... other routes wrapped in AnimatedPage */}
+      </Routes>
+    </AnimatePresence>
+  );
+}
 
 function App() {
   return (
     <Layout>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/parsing" element={<ParsingPhase />} />
-        {/* ... other routes */}
-      </Routes>
+      <AppRoutes />
     </Layout>
   );
 }
 ```
+
+**Route Transition Features:**
+- Smooth fade and slide animations on route changes
+- Automatic scroll-to-top on navigation
+- Exit animations before new page enters
 
 ## 🚦 Getting Started
 
@@ -226,7 +249,7 @@ export default function Layout({ children }: LayoutProps) {
           <Navigation />
           
           {/* Page Content */}
-          <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+          <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 max-w-7xl w-full min-w-0 overflow-x-hidden">
             {children}
           </main>
         </div>
@@ -235,6 +258,34 @@ export default function Layout({ children }: LayoutProps) {
       {/* Footer */}
       <Footer />
     </div>
+  );
+}
+```
+
+**`src/components/AnimatedPage.tsx`**: Wrapper component for page transitions and scroll-to-top
+```tsx
+import { useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
+
+export default function AnimatedPage({ children }: AnimatedPageProps) {
+  const location = useLocation();
+
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname]);
+
+  return (
+    <motion.div
+      key={location.pathname}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3, ease: 'easeInOut' }}
+    >
+      {children}
+    </motion.div>
   );
 }
 ```
@@ -280,6 +331,9 @@ A flexible card component with color variants and elegant hover effects:
 - Smooth hover transitions with enhanced shadow
 - Border and background opacity increase on hover
 - Minimalist design with 300ms transitions
+- Fade-in animations with staggered delays
+- Hover lift effect using Framer Motion
+- Full width constraints to prevent overflow (`w-full max-w-full overflow-hidden`)
 
 ### StepCard Component
 
@@ -308,21 +362,38 @@ Numbered step cards for explanations with automatic spacing:
 - Responsive layout (stacks on mobile, horizontal on desktop)
 - Inherits elegant hover effects from Card component
 - Gradient step number badges
+- Staggered fade-in animations from the left
+- Scale animations on step number badges
+- Proper overflow handling with `min-w-0` for flex containers
+- Text wrapping with `break-words` for long content
 
 ### CodeBlock Component
 
-Syntax-highlighted code display:
+Enhanced code display with copy-to-clipboard functionality and beautiful theming:
 
 ```tsx
 <CodeBlock title="Example" language="javascript">
-  {`const x = 10;`}
+  {`const x = 10;
+console.log(x);`}
 </CodeBlock>
 ```
 
 **Props:**
 - `children`: ReactNode - Code content
-- `title`: string - Optional header
+- `title`: string - Optional header (if not provided, shows language name)
 - `language`: string - Code language (default: 'javascript')
+
+**Features:**
+- macOS-style window controls (red, yellow, green dots) in header
+- Copy-to-clipboard button with visual feedback
+- "Copied!" confirmation message for 2 seconds
+- Gradient background (slate-900 to slate-800)
+- Enhanced typography with monospace font stack
+- Smooth fade-in animation on mount
+- Responsive header (stacks on mobile/tablet)
+- Horizontal scrolling for long code lines
+- Proper overflow handling with `min-w-0` and width constraints
+- Truncated title/language text to prevent overflow
 
 ### VisualBox Component
 
@@ -351,9 +422,12 @@ Top navigation bar for mobile and tablet devices:
 - Compact header design (reduced height)
 - Smaller logo size for better balance
 - Hamburger menu for mobile/tablet
-- Smooth dropdown animation
+- Smooth slide-in animation from top
+- Animated dropdown menu with height transitions
 - Active route highlighting
 - Sticky positioning
+- Hover scale effects on logo and menu button
+- Framer Motion powered animations
 
 ### Sidebar Component
 
@@ -367,9 +441,13 @@ Sidebar navigation for desktop screens (lg breakpoint and above):
 - Sticky sidebar with scrollable content
 - Full-height navigation panel
 - Active route highlighting with gradient
-- Smooth hover transitions
+- Smooth slide-in animation from left on mount
+- Staggered menu item animations (fade-in from left)
+- Hover slide effect (items shift right on hover)
+- Scale animations on click
 - Includes project subtitle
 - Only visible on desktop (hidden on mobile/tablet)
+- Framer Motion powered animations
 
 ### Footer Component
 
@@ -387,6 +465,10 @@ Footer with author credits, social links, and tech stack:
 - Links to documentation for each technology
 - Color-coded hover states for each tech icon
 - Minimalist design matching the overall theme
+- Scroll-triggered fade-in animation (appears when scrolled into view)
+- Hover scale and lift effects on all interactive elements
+- Smooth transitions with Framer Motion
+- Staggered animation for tech stack section
 
 **Technologies Displayed:**
 - JavaScript (JS)
@@ -469,16 +551,22 @@ The project uses a vibrant, modern color palette:
 Defined in `src/index.css`:
 - `.text-gradient`: Gradient text effect for headings
 - `.card-hover`: Elegant hover effects with shadow enhancement and opacity transitions
-- `.code-block`: Code block styling with dark theme
+- `.code-block`: Legacy code block styling with dark theme
+- `.code-block-enhanced`: Enhanced code block with gradient background and proper overflow handling
 - `.animate-fade-in`: Smooth fade-in animation for dropdowns
 
 ### Design Philosophy
 
 - **Minimalist**: Clean, uncluttered interface with subtle effects
 - **Responsive**: Optimized for all screen sizes with appropriate navigation
-- **Smooth Animations**: 300ms transitions for elegant feel
+- **Smooth Animations**: 300ms transitions for elegant feel using Framer Motion
 - **Transparent Colors**: Cards use opacity for depth and hierarchy
 - **Hover Feedback**: Subtle visual feedback without being distracting
+- **Page Transitions**: Smooth route changes with fade and slide effects
+- **Scroll Management**: Automatic scroll-to-top on navigation for better UX
+- **Overflow Handling**: Proper width constraints and `min-w-0` for flex containers
+- **Staggered Animations**: Sequential animations for lists and cards
+- **Accessibility**: Proper ARIA labels and semantic HTML throughout
 
 ## 🔧 Configuration Files
 
@@ -532,13 +620,38 @@ The `dist/` folder can be deployed to:
 - **GitHub Pages**: Configure to serve `dist/` folder
 - **Any static hosting**: Upload `dist/` contents
 
+## 🎬 Animation Features
+
+### Page Transitions
+- All pages are wrapped in `AnimatedPage` component
+- Smooth fade and slide animations on route changes
+- Automatic scroll-to-top on navigation
+- Exit animations before new page enters using `AnimatePresence`
+
+### Component Animations
+- **Cards**: Fade-in with staggered delays, hover lift effects
+- **StepCards**: Staggered fade-in from left, scale animations on step numbers
+- **CodeBlocks**: Fade-in with scale, animated copy button feedback
+- **Navigation**: Slide-in from top, animated mobile menu
+- **Sidebar**: Slide-in from left, staggered menu items
+- **Footer**: Scroll-triggered fade-in
+
+### Animation Patterns
+- Use `initial`, `animate`, and `transition` props from Framer Motion
+- Staggered delays using `index * 0.1` pattern
+- Hover effects with `whileHover` and `whileTap`
+- Scroll-triggered animations with `whileInView`
+
 ## 🧪 Development Tips
 
 1. **Component Reusability**: Use existing components (Card, StepCard, CodeBlock) for consistency
 2. **Responsive Design**: Always test on mobile, tablet, and desktop
 3. **Type Safety**: Leverage TypeScript for better code quality
-4. **Code Examples**: Use CodeBlock component for all code snippets
+4. **Code Examples**: Use CodeBlock component for all code snippets with copy functionality
 5. **Visual Aids**: Use VisualBox for diagrams and illustrations
+6. **Animations**: Wrap pages in AnimatedPage for route transitions
+7. **Overflow Handling**: Always use `min-w-0` in flex containers and `overflow-hidden` where needed
+8. **Testing Animations**: Test page transitions and scroll-to-top behavior
 
 ## 📚 Learning Resources
 
