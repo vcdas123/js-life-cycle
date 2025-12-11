@@ -12,7 +12,7 @@ export default function Navigation() {
         <div className="flex items-center justify-between gap-3 sm:gap-4">
           <Link 
             to="/" 
-            className="text-lg sm:text-xl md:text-2xl font-bold text-gradient hover:opacity-80 transition-opacity"
+            className="text-base sm:text-lg font-bold text-gradient hover:opacity-80 transition-opacity"
           >
             JS Life Cycle
           </Link>
@@ -34,24 +34,7 @@ export default function Navigation() {
             ))}
           </div>
 
-          {/* Tablet Navigation */}
-          <div className="hidden md:flex lg:hidden">
-            <select
-              value={location.pathname}
-              onChange={(e) => {
-                window.location.href = e.target.value
-              }}
-              className="px-2.5 py-1.5 rounded-md border border-purple-200 bg-white text-gray-700 text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent transition-all"
-            >
-              {routes.map((route) => (
-                <option key={route.path} value={route.path}>
-                  {route.label}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Mobile Menu Button */}
+          {/* Mobile/Tablet Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="lg:hidden p-1.5 sm:p-2 rounded-md text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-300"
