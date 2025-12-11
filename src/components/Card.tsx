@@ -16,7 +16,7 @@ const colorClasses = {
 
 export default function Card({ children, className = '', color = 'blue' }: CardProps) {
   return (
-    <div className={`rounded-xl border-2 p-6 shadow-lg card-hover ${colorClasses[color]} ${className}`}>
+    <div className={`rounded-xl border-2 p-4 sm:p-6 shadow-lg card-hover ${colorClasses[color]} ${className}`}>
       {children}
     </div>
   )

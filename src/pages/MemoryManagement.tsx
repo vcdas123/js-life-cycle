@@ -6,9 +6,9 @@ import VisualBox from '../components/VisualBox'
 export default function MemoryManagement() {
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gradient mb-4">Memory Management</h1>
-        <p className="text-xl text-gray-600">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-3xl sm:text-4xl font-bold text-gradient mb-3 sm:mb-4">Memory Management</h1>
+        <p className="text-base sm:text-lg lg:text-xl text-gray-600">
           How JavaScript manages memory allocation, garbage collection, and prevents
           memory leaks in your applications.
         </p>

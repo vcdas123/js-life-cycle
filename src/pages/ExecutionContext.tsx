@@ -6,9 +6,9 @@ import VisualBox from '../components/VisualBox'
 export default function ExecutionContext() {
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gradient mb-4">Execution Context</h1>
-        <p className="text-xl text-gray-600">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-3xl sm:text-4xl font-bold text-gradient mb-3 sm:mb-4">Execution Context</h1>
+        <p className="text-base sm:text-lg lg:text-xl text-gray-600">
           Understanding the environment where JavaScript code is executed, including
           variable scoping, this binding, and closure formation.
         </p>

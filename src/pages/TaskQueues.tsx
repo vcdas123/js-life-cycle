@@ -6,9 +6,9 @@ import VisualBox from '../components/VisualBox'
 export default function TaskQueues() {
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gradient mb-4">Task Queues</h1>
-        <p className="text-xl text-gray-600">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-3xl sm:text-4xl font-bold text-gradient mb-3 sm:mb-4">Task Queues</h1>
+        <p className="text-base sm:text-lg lg:text-xl text-gray-600">
           Understanding microtasks and macrotasks - the two types of task queues
           that determine the order of asynchronous code execution.
         </p>

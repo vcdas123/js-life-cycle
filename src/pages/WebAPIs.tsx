@@ -6,9 +6,9 @@ import VisualBox from '../components/VisualBox'
 export default function WebAPIs() {
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gradient mb-4">Web APIs</h1>
-        <p className="text-xl text-gray-600">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-3xl sm:text-4xl font-bold text-gradient mb-3 sm:mb-4">Web APIs</h1>
+        <p className="text-base sm:text-lg lg:text-xl text-gray-600">
           How browser Web APIs interact with JavaScript execution, offloading work
           from the main thread and integrating with the event loop.
         </p>

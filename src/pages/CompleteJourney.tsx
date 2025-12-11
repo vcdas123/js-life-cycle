@@ -7,9 +7,9 @@ import { Link } from 'react-router-dom'
 export default function CompleteJourney() {
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gradient mb-4">Complete Journey</h1>
-        <p className="text-xl text-gray-600">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-3xl sm:text-4xl font-bold text-gradient mb-3 sm:mb-4">Complete Journey</h1>
+        <p className="text-base sm:text-lg lg:text-xl text-gray-600">
           The end-to-end journey of JavaScript code execution, from writing code
           to final execution, combining all concepts together.
         </p>
@@ -19,10 +19,28 @@ export default function CompleteJourney() {
         step={1}
         title="Writing Code"
         description={
-          <p>
-            You write JavaScript code in a text editor. This is plain text - just characters
-            in a file. The browser or Node.js environment hasn't seen it yet.
-          </p>
+          <div>
+            <p className="mb-3">
+              You write JavaScript code in a text editor (VS Code, Sublime, Vim, etc.). This is
+              plain text - just characters in a file. At this stage, it's merely source code that
+              hasn't been processed by any JavaScript engine yet. The browser or Node.js environment
+              hasn't seen it yet.
+            </p>
+            <p className="mb-3">
+              Your code can be in various formats:
+            </p>
+            <ul className="list-disc list-inside ml-2 space-y-1">
+              <li><strong>.js files:</strong> Plain JavaScript (ES5, ES6+, or newer)</li>
+              <li><strong>.mjs files:</strong> ES modules</li>
+              <li><strong>.ts/.tsx files:</strong> TypeScript (transpiled to JS first)</li>
+              <li><strong>Inline scripts:</strong> Embedded in HTML via &lt;script&gt; tags</li>
+              <li><strong>Dynamic scripts:</strong> Created via document.createElement('script')</li>
+            </ul>
+            <p>
+              The format and delivery method don't matter - once it reaches the JavaScript engine,
+              it all goes through the same processing pipeline.
+            </p>
+          </div>
         }
         color="blue"
       >
@@ -33,36 +51,231 @@ function greet(name) {
   return \`Hi, \${name}!\`;
 }
 const message = greet("World");
-console.log(message);`}
+console.log(message);
+
+// This is just text at this point
+// No parsing, no execution, no compilation yet
+// It's waiting to be loaded and processed`}
         </CodeBlock>
+        <Card color="blue" className="mt-4">
+          <p className="text-sm text-gray-700">
+            <strong>Note:</strong> Modern development often involves build tools (Webpack, Vite, Rollup)
+            that may transform your code before it reaches the browser, but the final JavaScript still
+            goes through the same parsing and execution pipeline.
+          </p>
+        </Card>
       </StepCard>
 
       <StepCard
         step={2}
-        title="Loading & Parsing"
+        title="Script Loading"
         description={
-          <p>
-            When the script is loaded (via &lt;script&gt; tag, import, or require), the JavaScript
-            engine begins parsing. It performs tokenization, builds an AST, and checks for syntax errors.
-            During this phase, function and variable declarations are hoisted.
-          </p>
+          <div>
+            <p className="mb-3">
+              The script must be loaded into the JavaScript engine. In browsers, this happens via:
+            </p>
+            <ul className="list-disc list-inside ml-2 space-y-1 mb-3">
+              <li><strong>&lt;script&gt; tags:</strong> Synchronous or async loading</li>
+              <li><strong>ES6 modules:</strong> import/export statements, loaded asynchronously</li>
+              <li><strong>Dynamic imports:</strong> import() function for code splitting</li>
+              <li><strong>Web Workers:</strong> Separate JavaScript contexts</li>
+            </ul>
+            <p className="mb-3">
+              In Node.js, scripts are loaded via:
+            </p>
+            <ul className="list-disc list-inside ml-2 space-y-1">
+              <li><strong>require():</strong> CommonJS module loading</li>
+              <li><strong>import:</strong> ES6 modules (with .mjs or "type": "module")</li>
+              <li><strong>Command line:</strong> node script.js</li>
+            </ul>
+            <p>
+              Loading may be blocked by network requests, but once the source code is available,
+              parsing begins immediately.
+            </p>
+          </div>
+        }
+        color="purple"
+      >
+        <CodeBlock>
+{`// Browser loading examples:
+
+// Synchronous loading (blocks HTML parsing):
+<script src="app.js"></script>
+
+// Async loading (doesn't block):
+<script src="app.js" async></script>
+
+// Deferred loading (waits for HTML parsing):
+<script src="app.js" defer></script>
+
+// ES6 module (always async):
+<script type="module" src="app.js"></script>
+
+// Dynamic import:
+import('./module.js').then(module => {
+  // Module loaded and parsed
+});
+
+// Node.js loading:
+require('./module.js'); // CommonJS
+import './module.js';   // ES6 (with "type": "module" in package.json)`}
+        </CodeBlock>
+      </StepCard>
+
+      <StepCard
+        step={3}
+        title="Lexical Analysis (Tokenization)"
+        description={
+          <div>
+            <p className="mb-3">
+              Once loaded, the JavaScript engine begins <strong>lexical analysis</strong> (tokenization).
+              The lexer reads the source code character by character and groups them into <strong>tokens</strong>
+              - the smallest meaningful units of JavaScript code.
+            </p>
+            <p className="mb-3">
+              The lexer recognizes:
+            </p>
+            <ul className="list-disc list-inside ml-2 space-y-1 mb-3">
+              <li><strong>Keywords:</strong> const, let, var, function, if, return, etc.</li>
+              <li><strong>Identifiers:</strong> Variable names, function names</li>
+              <li><strong>Literals:</strong> Numbers, strings, booleans, null, undefined</li>
+              <li><strong>Operators:</strong> +, -, *, /, ===, &&, ||, etc.</li>
+              <li><strong>Punctuators:</strong> {, }, [, ], (, ), ;, ,, ., etc.</li>
+            </ul>
+            <p>
+              This phase ignores whitespace (except in strings) and comments. The output is a stream
+              of tokens that the parser will use to build the Abstract Syntax Tree.
+            </p>
+          </div>
+        }
+        color="blue"
+      >
+        <CodeBlock>
+{`// Input source code:
+const x = 10 + 5;
+
+// Lexical analysis produces tokens:
+[
+  { type: 'KEYWORD', value: 'const', line: 1, column: 1 },
+  { type: 'IDENTIFIER', value: 'x', line: 1, column: 7 },
+  { type: 'PUNCTUATOR', value: '=', line: 1, column: 9 },
+  { type: 'NUMBER', value: '10', line: 1, column: 11 },
+  { type: 'PUNCTUATOR', value: '+', line: 1, column: 14 },
+  { type: 'NUMBER', value: '5', line: 1, column: 16 },
+  { type: 'PUNCTUATOR', value: ';', line: 1, column: 17 }
+]
+
+// Each token contains:
+// - Type: What kind of token it is
+// - Value: The actual text/value
+// - Position: Line and column (for error reporting)`}
+        </CodeBlock>
+      </StepCard>
+
+      <StepCard
+        step={4}
+        title="Syntax Analysis (AST Generation)"
+        description={
+          <div>
+            <p className="mb-3">
+              The parser takes the token stream and builds an <strong>Abstract Syntax Tree (AST)</strong>.
+              This is a tree data structure that represents the hierarchical structure of your code.
+              The AST captures relationships, operator precedence, and nesting structure.
+            </p>
+            <p className="mb-3">
+              During this phase:
+            </p>
+            <ul className="list-disc list-inside ml-2 space-y-1 mb-3">
+              <li><strong>Syntax validation:</strong> Checks if tokens form valid JavaScript</li>
+              <li><strong>Error detection:</strong> Throws SyntaxError for invalid code</li>
+              <li><strong>Structure building:</strong> Creates nodes for declarations, expressions, statements</li>
+              <li><strong>Scope identification:</strong> Identifies function/block boundaries</li>
+            </ul>
+            <p>
+              If any syntax errors are found, parsing stops and execution never begins. The AST is
+              then used for bytecode generation or direct interpretation.
+            </p>
+          </div>
         }
         color="purple"
       >
         <VisualBox title="Parsing Process" color="bg-purple-500">
-          <div className="space-y-2 text-sm font-mono">
-            <div>Source Code → Tokens → AST → Bytecode</div>
-            <div className="text-gray-600 text-xs">
+          <div className="space-y-2 text-xs sm:text-sm font-mono">
+            <div className="border-l-4 border-purple-500 pl-2">Source Code</div>
+            <div className="border-l-4 border-blue-500 pl-2">↓ Tokenization</div>
+            <div className="border-l-4 border-blue-500 pl-2">Token Stream</div>
+            <div className="border-l-4 border-green-500 pl-2">↓ Syntax Analysis</div>
+            <div className="border-l-4 border-green-500 pl-2">Abstract Syntax Tree (AST)</div>
+            <div className="border-l-4 border-yellow-500 pl-2">↓ Code Generation</div>
+            <div className="border-l-4 border-yellow-500 pl-2">Bytecode / Machine Code</div>
+            <div className="text-gray-600 text-xs mt-2 space-y-1">
               • Syntax validation<br/>
               • Hoisting analysis<br/>
-              • Scope analysis
+              • Scope chain building<br/>
+              • Error detection
             </div>
           </div>
         </VisualBox>
       </StepCard>
 
       <StepCard
-        step={3}
+        step={5}
+        title="Hoisting Phase"
+        description={
+          <div>
+            <p className="mb-3">
+              During parsing, the engine performs <strong>hoisting</strong> - it scans the entire
+              scope and registers all declarations before execution begins. This happens during the
+              creation phase of execution contexts.
+            </p>
+            <p className="mb-3">
+              <strong>Hoisting rules:</strong>
+            </p>
+            <ul className="list-disc list-inside ml-2 space-y-1 mb-3">
+              <li><strong>Function declarations:</strong> Fully hoisted (name and body available)</li>
+              <li><strong>var declarations:</strong> Hoisted, initialized to undefined</li>
+              <li><strong>let/const declarations:</strong> Hoisted but in Temporal Dead Zone</li>
+              <li><strong>Class declarations:</strong> Hoisted but in TDZ (unlike functions)</li>
+            </ul>
+            <p>
+              This is why you can call functions before they're declared, and why var variables
+              return undefined instead of throwing ReferenceError.
+            </p>
+          </div>
+        }
+        color="pink"
+      >
+        <CodeBlock>
+{`// During parsing, hoisting happens:
+
+// Your code:
+console.log(x); // undefined (not error!)
+var x = 5;
+
+sayHello(); // Works!
+function sayHello() {
+  console.log("Hello");
+}
+
+// What actually happens:
+// 1. Parser scans entire scope
+// 2. Registers: var x (as undefined)
+// 3. Registers: function sayHello (fully)
+// 4. Then execution begins with these already registered
+
+// Equivalent to:
+var x; // hoisted
+function sayHello() { // hoisted
+  console.log("Hello");
+}
+console.log(x); // undefined
+x = 5; // assignment stays in place
+sayHello(); // works!`}
+        </CodeBlock>
+      </StepCard>
+
+      <StepCard
+        step={6}
         title="Global Execution Context Creation"
         description={
           <p>
@@ -90,7 +303,7 @@ function myFunction() {}  // fully hoisted
       </StepCard>
 
       <StepCard
-        step={4}
+        step={7}
         title="Code Execution Begins"
         description={
           <p>
@@ -122,7 +335,7 @@ console.log("Result:", result);`}
       </StepCard>
 
       <StepCard
-        step={5}
+        step={8}
         title="Asynchronous Operations"
         description={
           <p>
@@ -166,7 +379,7 @@ console.log("End");
       </StepCard>
 
       <StepCard
-        step={6}
+        step={9}
         title="Event Loop in Action"
         description={
           <p>
@@ -198,7 +411,7 @@ console.log("End");
       </StepCard>
 
       <StepCard
-        step={7}
+        step={10}
         title="Memory Management During Execution"
         description={
           <p>
@@ -231,7 +444,7 @@ result = null; // Reference removed
       </StepCard>
 
       <StepCard
-        step={8}
+        step={11}
         title="Complete Example"
         description={
           <p>
@@ -320,52 +533,78 @@ console.log("Code continues");
       </StepCard>
 
       <Card color="green" className="mt-8">
-        <h3 className="text-xl font-bold mb-4">Complete Journey Summary</h3>
-        <ol className="space-y-3 text-gray-700 list-decimal list-inside">
-          <li><strong>Writing:</strong> Developer writes JavaScript code</li>
-          <li><strong>Loading:</strong> Script loaded by browser/Node.js</li>
-          <li><strong>Parsing:</strong> Tokenization, AST generation, syntax checking</li>
-          <li><strong>Compilation:</strong> AST → Bytecode → Optimized code (JIT)</li>
-          <li><strong>Global EC:</strong> Global execution context created</li>
-          <li><strong>Execution:</strong> Code runs line by line on call stack</li>
-          <li><strong>Function Calls:</strong> New execution contexts created and pushed to stack</li>
-          <li><strong>Async Operations:</strong> Handed to Web APIs, callbacks queued</li>
-          <li><strong>Event Loop:</strong> Processes microtasks, then macrotasks</li>
-          <li><strong>Memory Management:</strong> Garbage collector frees unused memory</li>
+        <h3 className="text-xl sm:text-2xl font-bold mb-4">Complete Journey Summary</h3>
+        <ol className="space-y-3 text-gray-700 text-sm sm:text-base list-decimal list-inside">
+          <li><strong>Writing:</strong> Developer writes JavaScript code in text editor</li>
+          <li><strong>Loading:</strong> Script loaded by browser/Node.js (via script tag, import, require)</li>
+          <li><strong>Tokenization:</strong> Source code broken into tokens (lexical analysis)</li>
+          <li><strong>Parsing:</strong> Tokens converted to Abstract Syntax Tree (AST)</li>
+          <li><strong>Hoisting:</strong> Declarations registered before execution</li>
+          <li><strong>Compilation:</strong> AST → Bytecode (Ignition) → Optimized code (TurboFan, JIT)</li>
+          <li><strong>Global EC Creation:</strong> Global execution context created with global object, 'this', scope</li>
+          <li><strong>Execution Phase:</strong> Code runs line by line on call stack (synchronously)</li>
+          <li><strong>Function Calls:</strong> New execution contexts created and pushed to call stack</li>
+          <li><strong>Scope Resolution:</strong> Variables resolved via scope chain lookup</li>
+          <li><strong>Async Operations:</strong> Handed to Web APIs, callbacks queued (not executed immediately)</li>
+          <li><strong>Event Loop:</strong> Continuously processes microtasks, then macrotasks when stack is empty</li>
+          <li><strong>Closure Formation:</strong> Functions maintain references to outer scope variables</li>
+          <li><strong>Memory Management:</strong> Garbage collector periodically frees unreachable memory</li>
+          <li><strong>Optimization:</strong> Hot code paths optimized for better performance</li>
         </ol>
       </Card>
 
       <Card color="purple" className="mt-6">
-        <h3 className="text-xl font-bold mb-3">Key Takeaways</h3>
-        <p className="text-gray-700 mb-4">
+        <h3 className="text-xl sm:text-2xl font-bold mb-4">Key Takeaways</h3>
+        <p className="text-gray-700 mb-4 text-sm sm:text-base">
           Understanding the complete JavaScript execution model helps you write better code,
-          debug more effectively, and optimize performance. Each concept interconnects:
+          debug more effectively, and optimize performance. Each concept interconnects in a
+          complex but elegant system:
         </p>
-        <ul className="space-y-2 text-gray-700">
-          <li>• Parsing happens before execution (hoisting, syntax errors)</li>
-          <li>• Execution contexts manage scope and variable access</li>
-          <li>• Call stack manages function execution (synchronous)</li>
-          <li>• Event loop enables asynchronous behavior (non-blocking)</li>
-          <li>• Microtasks execute before macrotasks (promise priority)</li>
-          <li>• Web APIs offload work from main thread</li>
-          <li>• Memory is managed automatically (garbage collection)</li>
+        <ul className="space-y-2 text-gray-700 text-sm sm:text-base">
+          <li>• <strong>Parsing is separate:</strong> Happens completely before execution (enables hoisting, catches syntax errors early)</li>
+          <li>• <strong>Tokenization:</strong> Code is broken into smallest meaningful units (tokens) first</li>
+          <li>• <strong>AST representation:</strong> Tree structure captures code hierarchy and relationships</li>
+          <li>• <strong>Hoisting:</strong> Declarations processed during parsing, not execution</li>
+          <li>• <strong>Execution contexts:</strong> Each function gets its own context with variable environment and scope chain</li>
+          <li>• <strong>Call stack:</strong> LIFO structure managing synchronous function execution</li>
+          <li>• <strong>Scope chain:</strong> Links nested scopes for variable resolution</li>
+          <li>• <strong>Closures:</strong> Functions maintain access to outer scope even after outer function returns</li>
+          <li>• <strong>Event loop:</strong> Enables asynchronous behavior on single-threaded JavaScript</li>
+          <li>• <strong>Microtasks vs Macrotasks:</strong> Priority system ensures promises execute before setTimeout</li>
+          <li>• <strong>Web APIs:</strong> Browser APIs run on separate threads, communicate via callbacks</li>
+          <li>• <strong>Memory management:</strong> Automatic garbage collection frees unreachable objects</li>
+          <li>• <strong>JIT compilation:</strong> Hot code optimized at runtime for better performance</li>
+          <li>• <strong>Single-threaded:</strong> Only one operation executes at a time on call stack</li>
+          <li>• <strong>Non-blocking:</strong> Async operations don't freeze the application</li>
         </ul>
         <div className="mt-4 pt-4 border-t border-purple-300">
           <p className="text-gray-600 text-sm mb-3">
             Explore each topic in detail using the navigation menu above!
           </p>
           <div className="flex gap-2 flex-wrap">
-            <Link to="/parsing" className="px-3 py-1 bg-purple-100 text-purple-700 rounded text-sm hover:bg-purple-200">
+            <Link to="/parsing" className="px-3 py-1.5 bg-purple-100 text-purple-700 rounded text-sm hover:bg-purple-200 transition-colors">
               Parsing Phase
             </Link>
-            <Link to="/event-loop" className="px-3 py-1 bg-purple-100 text-purple-700 rounded text-sm hover:bg-purple-200">
+            <Link to="/execution-context" className="px-3 py-1.5 bg-purple-100 text-purple-700 rounded text-sm hover:bg-purple-200 transition-colors">
+              Execution Context
+            </Link>
+            <Link to="/call-stack" className="px-3 py-1.5 bg-purple-100 text-purple-700 rounded text-sm hover:bg-purple-200 transition-colors">
+              Call Stack
+            </Link>
+            <Link to="/event-loop" className="px-3 py-1.5 bg-purple-100 text-purple-700 rounded text-sm hover:bg-purple-200 transition-colors">
               Event Loop
             </Link>
-            <Link to="/task-queues" className="px-3 py-1 bg-purple-100 text-purple-700 rounded text-sm hover:bg-purple-200">
+            <Link to="/task-queues" className="px-3 py-1.5 bg-purple-100 text-purple-700 rounded text-sm hover:bg-purple-200 transition-colors">
               Task Queues
             </Link>
-            <Link to="/promises-async" className="px-3 py-1 bg-purple-100 text-purple-700 rounded text-sm hover:bg-purple-200">
+            <Link to="/promises-async" className="px-3 py-1.5 bg-purple-100 text-purple-700 rounded text-sm hover:bg-purple-200 transition-colors">
               Promises & Async
+            </Link>
+            <Link to="/web-apis" className="px-3 py-1.5 bg-purple-100 text-purple-700 rounded text-sm hover:bg-purple-200 transition-colors">
+              Web APIs
+            </Link>
+            <Link to="/memory-management" className="px-3 py-1.5 bg-purple-100 text-purple-700 rounded text-sm hover:bg-purple-200 transition-colors">
+              Memory Management
             </Link>
           </div>
         </div>

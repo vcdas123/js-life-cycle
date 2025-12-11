@@ -6,9 +6,9 @@ import VisualBox from '../components/VisualBox'
 export default function PromisesAsync() {
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gradient mb-4">Promises & Async/Await</h1>
-        <p className="text-xl text-gray-600">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-3xl sm:text-4xl font-bold text-gradient mb-3 sm:mb-4">Promises & Async/Await</h1>
+        <p className="text-base sm:text-lg lg:text-xl text-gray-600">
           How Promises and async/await interact with the event loop, microtask queue,
           and JavaScript execution model.
         </p>

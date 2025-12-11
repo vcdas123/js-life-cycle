@@ -6,9 +6,9 @@ import VisualBox from '../components/VisualBox'
 export default function EventLoop() {
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gradient mb-4">Event Loop</h1>
-        <p className="text-xl text-gray-600">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-3xl sm:text-4xl font-bold text-gradient mb-3 sm:mb-4">Event Loop</h1>
+        <p className="text-base sm:text-lg lg:text-xl text-gray-600">
           The event loop is the mechanism that enables JavaScript's asynchronous, non-blocking
           behavior. It's the secret behind how JavaScript can handle concurrent operations
           on a single thread.
