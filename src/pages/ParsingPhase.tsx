@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import StepCard from '../components/StepCard'
 import CodeBlock from '../components/CodeBlock'
 import Card from '../components/Card'
@@ -5,16 +6,27 @@ import Card from '../components/Card'
 export default function ParsingPhase() {
   return (
     <div>
-      <div className="mb-6 sm:mb-8">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="mb-6 sm:mb-8"
+      >
         <h1 className="text-3xl sm:text-4xl font-bold text-gradient mb-3 sm:mb-4">Parsing Phase</h1>
-        <p className="text-base sm:text-lg lg:text-xl text-gray-600">
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="text-base sm:text-lg lg:text-xl text-gray-600"
+        >
           The first step in JavaScript execution - understanding how your code is transformed
           from text into an executable structure.
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
 
       <StepCard
         step={1}
+        index={0}
         title="Tokenization (Lexical Analysis)"
         description={
           <div>
@@ -79,6 +91,7 @@ let name = "JavaScript";
 
       <StepCard
         step={2}
+        index={1}
         title="Abstract Syntax Tree (AST)"
         description={
           <div>
@@ -166,6 +179,7 @@ Program {
 
       <StepCard
         step={3}
+        index={2}
         title="Semantic Analysis & Hoisting"
         description={
           <div>
@@ -254,6 +268,7 @@ var func2 = function() {};
 
       <StepCard
         step={4}
+        index={3}
         title="Bytecode Generation (V8 Engine)"
         description={
           <div>
@@ -324,6 +339,7 @@ function add(a, b) {
 
       <StepCard
         step={5}
+        index={4}
         title="Scope Resolution"
         description={
           <div>
@@ -386,6 +402,7 @@ outer();
 
       <StepCard
         step={6}
+        index={5}
         title="Error Detection"
         description={
           <div>

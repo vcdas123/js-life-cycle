@@ -12,33 +12,34 @@
   .text-gradient {
     @apply bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent;
   }
-  
+
   .card-hover {
     @apply transition-all duration-300 ease-out;
     @apply hover:shadow-xl hover:shadow-purple-100/40;
     @apply hover:border-opacity-100;
     @apply hover:bg-opacity-90;
   }
-  
+
   .code-block {
     @apply bg-slate-900 text-green-400 rounded-lg p-4 font-mono text-sm overflow-x-auto;
   }
-  
+
   .code-block-enhanced {
     @apply bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border border-slate-700 shadow-lg;
   }
-  
+
   .code-block-enhanced pre {
     @apply m-0 p-4 sm:p-5 overflow-x-auto;
     line-height: 1.6;
   }
-  
+
   .code-block-enhanced code {
     @apply text-gray-100 block whitespace-pre;
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', 'Courier New', monospace;
+    font-family: "Monaco", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro",
+      "Courier New", monospace;
     font-size: 0.875rem;
   }
-  
+
   /* Syntax highlighting */
   .code-block-enhanced .token.comment,
   .code-block-enhanced .token.prolog,
@@ -46,11 +47,11 @@
   .code-block-enhanced .token.cdata {
     @apply text-slate-500 italic;
   }
-  
+
   .code-block-enhanced .token.punctuation {
     @apply text-gray-400;
   }
-  
+
   .code-block-enhanced .token.property,
   .code-block-enhanced .token.tag,
   .code-block-enhanced .token.constant,
@@ -58,12 +59,12 @@
   .code-block-enhanced .token.deleted {
     @apply text-red-400;
   }
-  
+
   .code-block-enhanced .token.boolean,
   .code-block-enhanced .token.number {
     @apply text-purple-400;
   }
-  
+
   .code-block-enhanced .token.selector,
   .code-block-enhanced .token.attr-name,
   .code-block-enhanced .token.string,
@@ -72,7 +73,7 @@
   .code-block-enhanced .token.inserted {
     @apply text-green-400;
   }
-  
+
   .code-block-enhanced .token.operator,
   .code-block-enhanced .token.entity,
   .code-block-enhanced .token.url,
@@ -80,28 +81,28 @@
   .code-block-enhanced .style .token.string {
     @apply text-yellow-400;
   }
-  
+
   .code-block-enhanced .token.atrule,
   .code-block-enhanced .token.attr-value,
   .code-block-enhanced .token.keyword {
     @apply text-blue-400;
   }
-  
+
   .code-block-enhanced .token.function,
   .code-block-enhanced .token.class-name {
     @apply text-cyan-400;
   }
-  
+
   .code-block-enhanced .token.regex,
   .code-block-enhanced .token.important,
   .code-block-enhanced .token.variable {
     @apply text-orange-400;
   }
-  
+
   .animate-fade-in {
     animation: fadeIn 0.2s ease-in;
   }
-  
+
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -113,4 +114,3 @@
     }
   }
 }
-

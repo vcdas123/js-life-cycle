@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { routes } from '../utils/routes'
 
 export default function Navigation() {
@@ -7,19 +8,31 @@ export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <nav className="lg:hidden bg-white/90 backdrop-blur-lg shadow-md sticky top-0 z-50 border-b border-purple-100">
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.3 }}
+      className="lg:hidden bg-white/90 backdrop-blur-lg shadow-md sticky top-0 z-50 border-b border-purple-100"
+    >
       <div className="container mx-auto px-3 sm:px-4 md:px-6 py-2 sm:py-2.5">
         <div className="flex items-center justify-between gap-3 sm:gap-4">
-          <Link 
-            to="/" 
-            className="text-sm sm:text-base font-bold text-gradient hover:opacity-80 transition-opacity"
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            JS Life Cycle
-          </Link>
+            <Link 
+              to="/" 
+              className="text-sm sm:text-base font-bold text-gradient hover:opacity-80 transition-opacity"
+            >
+              JS Life Cycle
+            </Link>
+          </motion.div>
 
           {/* Mobile/Tablet Menu Button */}
-          <button
+          <motion.button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             className="lg:hidden p-1.5 sm:p-2 rounded-md text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-300"
             aria-label="Toggle menu"
           >
@@ -38,13 +51,25 @@ export default function Navigation() {
                 <path d="M4 6h16M4 12h16M4 18h16" />
               )}
             </svg>
-          </button>
+          </motion.button>
         </div>
 
         {/* Mobile Dropdown Menu */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden mt-3 pb-3 border-t border-purple-100">
-            <div className="flex flex-col gap-1.5 pt-3 animate-fade-in">
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2 }}
+              className="lg:hidden mt-3 pb-3 border-t border-purple-100 overflow-hidden"
+            >
+              <motion.div
+                initial={{ y: -10 }}
+                animate={{ y: 0 }}
+                transition={{ duration: 0.2 }}
+                className="flex flex-col gap-1.5 pt-3"
+              >
               {routes.map((route) => (
                 <Link
                   key={route.path}
@@ -59,11 +84,12 @@ export default function Navigation() {
                   {route.label}
                 </Link>
               ))}
-            </div>
-          </div>
-        )}
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-    </nav>
+    </motion.nav>
   )
 }
 
