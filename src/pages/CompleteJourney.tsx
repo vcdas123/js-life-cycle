@@ -140,7 +140,7 @@ import './module.js';   // ES6 (with "type": "module" in package.json)`}
               <li><strong>Identifiers:</strong> Variable names, function names</li>
               <li><strong>Literals:</strong> Numbers, strings, booleans, null, undefined</li>
               <li><strong>Operators:</strong> +, -, *, /, ===, &&, ||, etc.</li>
-              <li><strong>Punctuators:</strong> {, }, [, ], (, ), ;, ,, ., etc.</li>
+              <li><strong>Punctuators:</strong> {'{'}, {'}'}, [, ], (, ), ;, ,, ., etc.</li>
             </ul>
             <p>
               This phase ignores whitespace (except in strings) and comments. The output is a stream

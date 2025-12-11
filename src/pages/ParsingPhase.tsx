@@ -32,7 +32,7 @@ export default function ParsingPhase() {
               <li><strong>Identifiers:</strong> Variable names, function names (must start with letter, $, or _)</li>
               <li><strong>Literals:</strong> Numbers, strings, booleans, null, undefined</li>
               <li><strong>Operators:</strong> +, -, *, /, ===, !==, &&, ||, etc.</li>
-              <li><strong>Punctuators:</strong> {, }, [, ], (, ), ;, ,, ., etc.</li>
+              <li><strong>Punctuators:</strong> {'{'}, {'}'}, [, ], (, ), ;, ,, ., etc.</li>
             </ul>
             <p>
               This phase ignores whitespace (except when significant, like in strings) and comments.
