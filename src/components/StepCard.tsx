@@ -19,7 +19,7 @@ const colorGradients = {
 
 export default function StepCard({ step, title, description, children, color = 'blue' }: StepCardProps) {
   return (
-    <Card color={color}>
+    <Card color={color} className="mb-6">
       <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4">
         <div className={`flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full ${colorGradients[color]} text-white font-bold text-lg sm:text-xl flex items-center justify-center shadow-lg`}>
           {step}
