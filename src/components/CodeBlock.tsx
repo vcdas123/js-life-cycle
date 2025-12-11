@@ -37,7 +37,7 @@ export default function CodeBlock({ children, title, language = 'javascript' }: 
       initial={{ opacity: 0, scale: 0.98 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3 }}
-      className="my-4 sm:my-6 relative group"
+      className="my-4 sm:my-6 relative group w-full min-w-0"
     >
       {/* Header with title and copy button */}
       <div className="bg-gradient-to-r from-slate-800 to-slate-900 text-gray-200 px-3 sm:px-4 py-2.5 rounded-t-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0 border-b border-slate-700">
@@ -94,8 +94,8 @@ export default function CodeBlock({ children, title, language = 'javascript' }: 
       </div>
       
       {/* Code block */}
-      <div className="code-block-enhanced rounded-b-lg text-xs sm:text-sm overflow-x-auto max-w-full">
-        <pre className="m-0 p-0 overflow-x-auto">
+      <div className="code-block-enhanced rounded-b-lg text-xs sm:text-sm overflow-x-auto w-full min-w-0">
+        <pre className="m-0 p-0 overflow-x-auto w-full">
           <code className={`language-${language} block whitespace-pre`}>{children}</code>
         </pre>
       </div>

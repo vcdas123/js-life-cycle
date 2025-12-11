@@ -27,7 +27,7 @@ export default function StepCard({ step, title, description, children, color = '
       transition={{ duration: 0.5, delay: index * 0.1 }}
     >
       <Card color={color} className="mb-6" index={index}>
-        <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4">
+        <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4 w-full min-w-0">
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
@@ -36,12 +36,12 @@ export default function StepCard({ step, title, description, children, color = '
           >
             {step}
           </motion.div>
-          <div className="flex-1 w-full">
+          <div className="flex-1 w-full min-w-0 overflow-hidden">
             <motion.h3
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: index * 0.1 + 0.3 }}
-              className="text-xl sm:text-2xl font-bold text-gray-800 mb-2"
+              className="text-xl sm:text-2xl font-bold text-gray-800 mb-2 break-words"
             >
               {title}
             </motion.h3>
@@ -49,7 +49,7 @@ export default function StepCard({ step, title, description, children, color = '
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4, delay: index * 0.1 + 0.4 }}
-              className="text-sm sm:text-base text-gray-700 leading-relaxed"
+              className="text-sm sm:text-base text-gray-700 leading-relaxed break-words"
             >
               {description}
             </motion.div>
@@ -58,7 +58,7 @@ export default function StepCard({ step, title, description, children, color = '
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: index * 0.1 + 0.5 }}
-                className="mt-3 sm:mt-4"
+                className="mt-3 sm:mt-4 w-full min-w-0"
               >
                 {children}
               </motion.div>

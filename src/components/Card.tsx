@@ -23,7 +23,7 @@ export default function Card({ children, className = '', color = 'blue', index =
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
       whileHover={{ y: -4 }}
-      className={`rounded-xl border-2 p-4 sm:p-6 shadow-md card-hover ${colorClasses[color]} ${className}`}
+      className={`rounded-xl border-2 p-4 sm:p-6 shadow-md card-hover ${colorClasses[color]} ${className} w-full max-w-full overflow-hidden`}
     >
       {children}
     </motion.div>
