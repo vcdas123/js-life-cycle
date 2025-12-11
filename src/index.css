@@ -34,10 +34,20 @@
   }
 
   .code-block-enhanced code {
-    @apply text-gray-100 block whitespace-pre;
+    @apply text-gray-100 block;
     font-family: "Monaco", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro",
       "Courier New", monospace;
     font-size: 0.875rem;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  @media (min-width: 768px) {
+    .code-block-enhanced code {
+      white-space: pre;
+      word-break: normal;
+      overflow-wrap: normal;
+    }
   }
 
   /* Syntax highlighting */

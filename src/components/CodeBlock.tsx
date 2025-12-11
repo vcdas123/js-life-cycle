@@ -40,25 +40,25 @@ export default function CodeBlock({ children, title, language = 'javascript' }: 
       className="my-4 sm:my-6 relative group"
     >
       {/* Header with title and copy button */}
-      <div className="bg-gradient-to-r from-slate-800 to-slate-900 text-gray-200 px-3 sm:px-4 py-2.5 rounded-t-lg flex items-center justify-between border-b border-slate-700">
-        <div className="flex items-center gap-2">
-          <div className="flex gap-1.5">
+      <div className="bg-gradient-to-r from-slate-800 to-slate-900 text-gray-200 px-3 sm:px-4 py-2.5 rounded-t-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0 border-b border-slate-700">
+        <div className="flex items-center gap-2 min-w-0 flex-1">
+          <div className="flex gap-1.5 flex-shrink-0">
             <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
             <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
             <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
           </div>
           {title && (
-            <span className="text-xs sm:text-sm font-medium ml-2">{title}</span>
+            <span className="text-xs sm:text-sm font-medium ml-2 truncate">{title}</span>
           )}
           {!title && (
-            <span className="text-xs font-mono text-gray-400">{language}</span>
+            <span className="text-xs font-mono text-gray-400 truncate">{language}</span>
           )}
         </div>
         <motion.button
           onClick={handleCopy}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-medium text-gray-300 hover:text-white hover:bg-slate-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-400"
+          className="flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-medium text-gray-300 hover:text-white hover:bg-slate-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-400 flex-shrink-0 self-start sm:self-auto"
           aria-label="Copy code"
         >
           <AnimatePresence mode="wait">
@@ -94,9 +94,9 @@ export default function CodeBlock({ children, title, language = 'javascript' }: 
       </div>
       
       {/* Code block */}
-      <div className="code-block-enhanced rounded-b-lg text-xs sm:text-sm overflow-x-auto">
-        <pre className="m-0 p-0">
-          <code className={`language-${language} block`}>{children}</code>
+      <div className="code-block-enhanced rounded-b-lg text-xs sm:text-sm overflow-x-auto max-w-full">
+        <pre className="m-0 p-0 overflow-x-auto">
+          <code className={`language-${language} block whitespace-pre`}>{children}</code>
         </pre>
       </div>
     </motion.div>
